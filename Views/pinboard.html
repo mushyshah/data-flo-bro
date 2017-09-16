@@ -3,20 +3,26 @@
 <html lang="en">
 
     <!-- Lets get some angular in here -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular-animate.js"></script>
 
     <!-- HTML HEAD -->
     <head>
         <link rel="stylesheet" type="text/css" href="canvas.css">
+        <link rel="stylesheet" type="text/css" href="slidingPane.css">
         <meta charset="UTF-8">
         <title>Pinboard</title>
     </head>
 
     <!-- HTML BODY -->
     <!-- Declare body as pinboard ng-app -->
-    <body ng-app="pinboard">
-        <canvas id="canvas" width="100%" height="100%"></canvas>
+    <body ng-app="ngAnimate">
+        <canvas id="canvas"></canvas>
         <script src="canvas.js"></script>
+            <div class="side-pane" ng-show="slide">
+            <div class="side-pane-arrow" ng-click="slide=!slide">
+            </div>
+        </div>
     </body>
 
 </html>

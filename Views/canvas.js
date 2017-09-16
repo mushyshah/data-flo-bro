@@ -3,6 +3,8 @@
         var canvas = document.getElementById('canvas'),
                 context = canvas.getContext('2d');
 
+                //var slide = false;
+
         //Add listener for window resize
         window.addEventListener('resize', redrawCanvas);
         
