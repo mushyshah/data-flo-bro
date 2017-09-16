@@ -1,42 +1,59 @@
 * { margin:0; padding:0; }
 
   .side-pane-c {
-    
     position:absolute;
+    left:0;
+    top:0;
     height:100%;
-    width:15%;
-    top: 0;
-    left: 0;
-    display:block!important;
+    width:100%;
+    text-align: left;
+    font-size: 0;
 
+    display:inline-block!important;
   }
 
   .side-pane {
-    
-    position:absolute;
+
+    position:relative;
     width: 15%;
     height:100%;
     top: 0;
     left:0;
-    background:#406E8E;
+    background: #406E8E;
+    text-align: center;
+    font-size: 0;
 
-    border-style: round;
-    border-radius: 20px;
-
-    display:block!important;
+    display:inline-block!important;
 
   }
 
+  .button{
+    height:10%;
+    width:90%;
+    background: #FFFFFF;
+    border-style: round;
+    border-radius: 10px;
+    margin: 5%;
+    font-size: 10pt;
+    color: black;
+    text-align: center;
+  }
+
+.button:active{
+
+    background: #881414;
+
+}
+
   .side-pane-arrow {
     background:#CBF7ED;
-    position:absolute;
-    width: 20px;
+    position:relative;
     height: 100%;
-    right:0;
+    width: 20px;
     border-right-style: round;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    display:block!important;
+    display:inline-block!important;
   }
 
   #slide{
@@ -53,8 +70,8 @@
   }
 
   .side-pane.ng-hide {
-    width:20px;
-    background:none;
-    display:block!important;
+    width: 0px;
+    background: none;
+    display: hide!important;
   }
 

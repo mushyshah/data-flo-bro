@@ -3,11 +3,10 @@
         var canvas = document.getElementById('canvas'),
                 context = canvas.getContext('2d');
 
-                //var slide = false;
-
         //Add listener for window resize
         window.addEventListener('resize', redrawCanvas);
         
+        var slide = false;
         function redrawCanvas() {
                 //Canvas to take full browser window
                 canvas.width = window.innerWidth;

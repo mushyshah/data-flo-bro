@@ -10,19 +10,26 @@
     <head>
         <link rel="stylesheet" type="text/css" href="canvas.css">
         <link rel="stylesheet" type="text/css" href="slidingPane.css">
+        <script src="slidingPane.js"></script>
         <meta charset="UTF-8">
         <title>Pinboard</title>
     </head>
 
     <!-- HTML BODY -->
     <!-- Declare body as pinboard ng-app -->
-    <body ng-app="ngAnimate">
+    <body ng-app="objectsPane" ng-controller="todoController">
         <canvas id="canvas"></canvas>
         <script src="canvas.js"></script>
-            <div class="side-pane" ng-show="slide">
-            <div class="side-pane-arrow" ng-click="slide=!slide">
+
+            <div class="side-pane-c">
+                    <!-- ng-show="slide" -->
+                <div class="side-pane" ng-show="slide">
+                       <div class="button" draggable="true" ng-repeat="t in tasks"></div> 
+                </div>      
+                <div class="side-pane-arrow" ng-click="slide=!slide"></div>
             </div>
-        </div>
+
+            
     </body>
 
 </html>
