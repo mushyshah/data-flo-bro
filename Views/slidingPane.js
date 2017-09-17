@@ -50,7 +50,7 @@ app.controller('widgets', function($scope) {
         $scope.bStyle.height = event.srcElement.offsetHeight + 'px';
         $scope.bStyle.width = event.srcElement.offsetWidth + 'px';
 
-        //console.log(event);
+        console.log(event);
 
     };
 
@@ -59,16 +59,27 @@ app.controller('widgets', function($scope) {
         event.preventDefault();
         this.style.opacity = '1';    
 
+        //Get the element's ID
+        var id = event.srcElement.id;
+
         //Compute final (absolute) value for resultant element 
         $scope.bStyle.left = (event.pageX - $scope.bStyle.left) + 'px';
         $scope.bStyle.top = (event.pageY - $scope.bStyle.top) + 'px';
 
         //console.log($scope.bStyle);
+        var w = {};
+        w.draggable = "true";
+        w.style = $scope.bStyle;
 
-        //Add widget based on style and dimensions found. Apply
-        $scope.$apply(function(){
-            $scope.widgets.push($scope.bStyle);
-        });
+        console.log(w);
+
+        if(id == ""){
+            //Add widget based on style and dimensions found. Apply
+            $scope.$apply(function(){
+                $scope.widgets.push(w);
+            });
+        }
+        
 
 
     };

@@ -26,7 +26,7 @@
         
             <div class="side-pane-c" id="canvasdiv" ng-controller="widgets">
                 <div ng-repeat="w in widgets track by $index">
-                        <div ng-style="{{w}}"></div>
+                        <div id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}"></div>
                 </div> 
                 <div class="side-pane" ng-show="slide">
                        <div class="button" draggable="true" ng-repeat="i in items" ></div> 
