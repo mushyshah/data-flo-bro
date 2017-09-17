@@ -71,16 +71,23 @@ app.controller('widgets', function($scope) {
         w.draggable = "true";
         w.style = $scope.bStyle;
 
-        console.log(w);
-
-        if(id == ""){
+        //If this is a new widget (no id), create a new one
+        if (id == ""){
             //Add widget based on style and dimensions found. Apply
             $scope.$apply(function(){
                 $scope.widgets.push(w);
             });
-        }
+        } 
         
+        //Otherwise find out what widget this is and move it
+        else{
+            var element = document.getElementById(id);
+            
+            console.log(element)
 
+            element.style.left=$scope.bStyle.left;
+            element.style.top=$scope.bStyle.top;
+        }
 
     };
 
