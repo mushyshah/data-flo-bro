@@ -13,7 +13,6 @@
   }
 
   .side-pane {
-
     position:relative;
     width: 15%;
     height:100%;
@@ -22,9 +21,18 @@
     background: #406E8E;
     text-align: center;
     font-size: 0;
-
     display:inline-block!important;
+  }
 
+  .side-pane-arrow {
+    background:#CBF7ED;
+    position:relative;
+    height: 100%;
+    width: 20px;
+    border-right-style: round;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    display:inline-block!important;
   }
 
   .button{
@@ -37,23 +45,6 @@
     font-size: 10pt;
     color: black;
     text-align: center;
-  }
-
-.button:active{
-
-    background: #881414;
-
-}
-
-  .side-pane-arrow {
-    background:#CBF7ED;
-    position:relative;
-    height: 100%;
-    width: 20px;
-    border-right-style: round;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    display:inline-block!important;
   }
 
   #slide{

@@ -17,14 +17,19 @@
 
     <!-- HTML BODY -->
     <!-- Declare body as pinboard ng-app -->
-    <body ng-app="objectsPane" ng-controller="todoController">
+    <body ng-app="objectsPane" ng-controller="widgetContainer">
         <canvas id="canvas"></canvas>
+
         <script src="canvas.js"></script>
 
-            <div class="side-pane-c">
-                    <!-- ng-show="slide" -->
+        <script src="widgets.js"></script>
+        
+            <div class="side-pane-c" id="canvasdiv" ng-controller="widgets">
+                <div ng-repeat="w in widgets track by $index">
+                        <div ng-style="{{w}}"></div>
+                </div> 
                 <div class="side-pane" ng-show="slide">
-                       <div class="button" draggable="true" ng-repeat="t in tasks"></div> 
+                       <div class="button" draggable="true" ng-repeat="i in items" ></div> 
                 </div>      
                 <div class="side-pane-arrow" ng-click="slide=!slide"></div>
             </div>
