@@ -8,9 +8,9 @@
 
     <!-- HTML HEAD -->
     <head>
-        <link rel="stylesheet" type="text/css" href="canvas.css">
-        <link rel="stylesheet" type="text/css" href="slidingPane.css">
-        <script src="slidingPane.js"></script>
+        <link rel="stylesheet" type="text/css" href="../assets/canvas.css">
+        <link rel="stylesheet" type="text/css" href="../assets/slidingPane.css">
+        <script src="../controllers/slidingPane.js"></script>
 
         <meta charset="UTF-8">
         <title>Pinboard</title>
@@ -19,9 +19,9 @@
     <!-- HTML BODY -->
     <!-- Declare body as pinboard ng-app -->
     <body ng-app="objectsPane" ng-controller="widgetContainer">
-        <script src="widgets.js"></script>
-        <script src="canvas.js"></script>
-        <script src="grid.js"></script>
+        <script src="../controllers/widgets.js"></script>
+        <script src="../controllers/canvas.js"></script>
+        <script src="../controllers/grid.js"></script>
 
         <canvas id="canvas" ng-controller="canvas" ng-init="init()">        </canvas>
 
