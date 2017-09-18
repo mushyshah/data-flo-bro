@@ -7,3 +7,15 @@ app.directive('draggable', function() {
         }  
     }
 });
+
+app.directive('droppable', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, element, attrs) {
+        element[0].addEventListener('drop', scope.dragDrop, false);
+        element[0].addEventListener('dragover', scope.dragOver, false);
+        element[0].addEventListener('dragleave', scope.dragLeave, false);  
+        }
+    }
+
+});

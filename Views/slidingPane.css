@@ -22,6 +22,7 @@
     text-align: center;
     font-size: 0;
     display:inline-block!important;
+    overflow: auto;
   }
 
   .side-pane-arrow {
@@ -36,8 +37,8 @@
   }
 
   .button{
-    height:10%;
     width:90%;
+    height:10%;
     background: #FFFFFF;
     border-style: round;
     border-radius: 10px;
