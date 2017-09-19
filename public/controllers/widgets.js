@@ -1,80 +1,5 @@
 
-var app = angular.module('dashBoard',[]);
-
-// Create factory that would be used to create array of grid anchor points
-app.factory('gPoints', function(){
-
-    return {
-        func:function(xTotal,yTotal,w,include,response){
-        
-        // Initialize points variable
-        var points = [];
-        points.length=0;
-        
-        // Set x and y division values
-        var xDivision = (w.innerWidth/xTotal);
-        var yDivision = (w.innerHeight/yTotal);
-
-        // Create all anchor points
-            for(i=0; i< xTotal ; i++){
-                for(j=0; j< yTotal ; j++){
-                    var anchorPoint = {"x": 0,"y": 0};
-
-                    // Create point pixel values via loop and division values
-                    anchorPoint.x = (xDivision/2) + Math.round(i*xDivision);
-                    anchorPoint.y = (yDivision/2) + Math.round(j*yDivision);
-                    
-                    // To provide even padding on left/right top/down of grid
-                    if(i==0)
-                    anchorPoint.x = Math.round(xDivision/2);
-                    if(j==0)
-                    anchorPoint.y = Math.round(yDivision/2);
-
-                        // Unnecessary calculations here, don't wanna touch, no harm.
-                        // Don't include points that are on right and bottom end of screen (don't wanna draw there)
-                        if(((i*xDivision)+(1.5*xDivision)<w.innerWidth) && ((j*yDivision)+(1.5*yDivision)<w.innerHeight))
-                            points.push(anchorPoint);
-                        // Unless specifically want to include it for the grid dots
-                        else if(!include)
-                        points.push(anchorPoint);
-                }
-            }
-
-            //Callback function with point values
-            response(points);
-            
-        }
-    };
-
-});
-
-
-app.controller('global', function($scope) {
-            
-            //Define some global variables on the scope (ew)
-            $scope.$gg=[];
-            $scope.$dimensions = {};
-            $scope.$elements = {};
-
-            $scope.boxes = [];
-            
-            // Initialize 5 boxes for me (WIP)
-            var init = function () {
-                // and fire search in case its value is not empty
-                for(i=0 ; i<=5 ; i++){
-                $scope.boxes.push('Button ' + i);
-            }
-            
-        };
-
-        //Initialize
-        init();
-
-})
-
-
-
-app.controller('widgets', function($scope, $timeout, gPoints) {
+app.controller('widgets', function($scope, $timeout, gPoints, socket) {
 
     //Scope variables
     $scope.gridPoints=[];
@@ -130,6 +55,7 @@ app.controller('widgets', function($scope, $timeout, gPoints) {
         var w = {};
         w.draggable = "true";
         w.style = $scope.bStyle;
+        w.ping = 0;
 
         //Link the widget to the grid item it's being dropped on
         w.bindsTo = $scope.dropZone;
@@ -301,5 +227,41 @@ app.controller('widgets', function($scope, $timeout, gPoints) {
     
     //Drawgrid 50ms after instantiation
     $timeout(drawGrid,50);
+
+    $scope.blinkC = function(i){
+
+                    //Get widget by id/index
+                    var buttonElement = document.getElementById('object-'+i);
+                    buttonElement.style.background = 'coral';
+
+    };
+
+    $scope.blinkW = function(i){
+        
+                            //Get widget by id/index
+                            var buttonElement = document.getElementById('object-'+i);
+                            buttonElement.style.background = 'white';
+        
+            };
+
+    socket.on('ping', function (data) {
+        console.log(data);
+        //Loop through all existing widgets
+        for(i=0 ; i<$scope.widgets.length ; i++){
+            if($scope.widgets[i].bindsTo==data.widget){
+                
+                $timeout($scope.blinkC(i),10);
+                
+
+                socket.emit('pingResponse','Ping to widget '+ $scope.widgets[i].bindsTo + ' was successful!');
+            }
+            return;
+        }
+
+                socket.emit('pingResponse','Widget '+ data.widget + ' not found :('); 
+
+    });
+
+
     
 })
