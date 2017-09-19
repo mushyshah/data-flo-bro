@@ -1,4 +1,4 @@
-app.controller('canvas', function($scope,$timeout) {
+app.controller('canvas', function($scope,$timeout,gPoints) {
 
         $scope.anchorDivision =  window.innerWidth/30;
         $scope.gridPoints = [];
@@ -12,7 +12,7 @@ app.controller('canvas', function($scope,$timeout) {
 
         var slide = false;
         
-        function redrawCanvas() {
+        function drawCanvas() {
 
                 $scope.$anchorDivision = window.innerWidth/30;
                 //Canvas to take full browser window
@@ -20,7 +20,7 @@ app.controller('canvas', function($scope,$timeout) {
                 canvas.height = window.innerHeight;
 
                 $scope.$scaleFactor = ((canvas.width/$scope.$dimensions.width)+(canvas.height/$scope.$dimensions.height))/2;
-                console.log($scope.$scaleFactor);
+                //console.log($scope.$scaleFactor);
 
                 //Crappy temp loop to create grid dots
                 for(i=canvas.width/60 ; i< canvas.width ; i+=(canvas.width/30)){
@@ -36,20 +36,54 @@ app.controller('canvas', function($scope,$timeout) {
 
                 
         }
-
-        redrawCanvas();
+        //$scope.init();
+        drawCanvas();
 
         function reDraw(){
-                $scope.init();
+                redrawCanvas();
         }
 
+        function redrawCanvas(event) {  
+                
+                        $scope.gridDivision = (window.innerWidth/30);
+                
+                        $timeout(function(){
+
+                        gPoints.func($scope.$elements.x,$scope.$elements.y,window,false,function(response){ 
+                            canvas.width = window.innerWidth;
+                            canvas.height = window.innerHeight;
+                            for(i=0 ; i<response.length ; i++){
+                                    console.log('yo');
+                                    var gridElement = document.getElementById('gridPoint-'+i);
+                
+                                        context.fillStyle = "#8EA8C3";
+                                        context.beginPath();
+                                        context.arc(response[i].x, response[i].y, 3*$scope.$scaleFactor, 0, Math.PI * 2, true);
+                                        context.fill();
+                
+                            }
+                        });
+                
+                        },50);
+                                
+        }       
+
+
+
         $scope.init = function (){
+
                 $scope.$gg.length=0;
                 $scope.$dimensions.width = window.innerWidth;
                 $scope.$dimensions.height = window.innerHeight;
                 $scope.$gridDistance =  window.innerWidth/30;
+                $scope.$hDivision = window.innerWidth/30;
+                $scope.$wDivision = window.innerWidth/30;
+
+                var h=0;
+                var v=0;
 
                 for(i=$scope.anchorDivision/2; i< canvas.width ; i=i+$scope.anchorDivision){
+                v=0;
                         for(j=$scope.anchorDivision/2; j< canvas.height ; j=j+$scope.anchorDivision){
                                 
                                 var anchorPoint = {
@@ -60,18 +94,20 @@ app.controller('canvas', function($scope,$timeout) {
                                 anchorPoint.x = Math.round(i);
                                 anchorPoint.y = Math.round(j);
 
-
-                                if (anchorPoint.x > $scope.$max.x)
-                                        $scope.$max.x=anchorPoint.x;
-
-                                if (anchorPoint.y > $scope.$max.y)
-                                $scope.$max.y=anchorPoint.y;
-
+                                if((i+$scope.$gridDistance<window.innerWidth) && (j+$scope.$gridDistance<window.innerHeight))
                                 $scope.$gg.push(anchorPoint);
+
+
+                        v++;      
                         }
+                        
+                h++;
                 }
+
+                $scope.$elements.x=h;
+                $scope.$elements.y=v;
                                 
-                $timeout(redrawCanvas,100);
+                $timeout(drawCanvas,50);
         }
 
 
