@@ -236,29 +236,32 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
 
     };
 
-    $scope.blinkW = function(i){
-        
-                            //Get widget by id/index
-                            var buttonElement = document.getElementById('object-'+i);
-                            buttonElement.style.background = 'white';
-        
-            };
-
     socket.on('ping', function (data) {
-        console.log(data);
-        //Loop through all existing widgets
-        for(i=0 ; i<$scope.widgets.length ; i++){
-            if($scope.widgets[i].bindsTo==data.widget){
-                
-                $timeout($scope.blinkC(i),10);
-                
 
-                socket.emit('pingResponse','Ping to widget '+ $scope.widgets[i].bindsTo + ' was successful!');
-            }
-            return;
-        }
+        $timeout(function(){
+            
+            var found = false;
+            //If the ping received is not undefined
+            if(data!=undefined){
+                //Loop through all existing widgets
+                for(i=0 ; i<$scope.widgets.length ; i++){
+                    //If ping matches current widget, change it to coral
+                    if($scope.widgets[i].bindsTo==data.widget){
+                        found=true;
+                        var buttonElement = document.getElementById('object-'+i);
+                        buttonElement.style.background = 'coral';
 
+                        //Let the server know the ping was succesful - widget was found
+                        socket.emit('pingResponse','Ping to widget '+ $scope.widgets[i].bindsTo + ' was successful!');
+                    }
+                }
+                
+                if(!found)
                 socket.emit('pingResponse','Widget '+ data.widget + ' not found :('); 
+            }
+        },10);
+
+        
 
     });
 
