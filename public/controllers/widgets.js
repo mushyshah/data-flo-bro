@@ -32,8 +32,8 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         event.preventDefault();
         this.style.opacity = '1';
         
-        var wDivision = (window.innerWidth/$scope.$elements.x);
-        var hDivision = (window.innerHeight/$scope.$elements.y);
+        var xDivision = (window.innerWidth/$scope.$gridPointsMeta.xTotal);
+        var yDivision = (window.innerHeight/$scope.$gridPointsMeta.yTotal);
 
         //Get the element's ID
         var id = event.srcElement.id;
@@ -46,10 +46,10 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         $scope.bStyle.top = dropZone.style.top;
 
         //Compute vertical and horizontal scale. Compute height and wifth 
-        var hScale = Math.round($scope.bStyle.height/hDivision)
-        var wScale = Math.round($scope.bStyle.width/wDivision)
-        $scope.bStyle.height = hDivision*hScale + 'px';
-        $scope.bStyle.width = wDivision*wScale + 'px';
+        var hScale = Math.round($scope.bStyle.height/yDivision)
+        var wScale = Math.round($scope.bStyle.width/xDivision)
+        $scope.bStyle.height = yDivision*hScale + 'px';
+        $scope.bStyle.width = xDivision*wScale + 'px';
 
         //Create widget object to push
         var w = {};
@@ -128,7 +128,7 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         $scope.gridDivision = (window.innerWidth/30);
 
         //Iterate through initial grid positions
-        for(i=0 ; i<$scope.$gg.length ; i++){
+        for(i=0 ; i<$scope.$gridPoints.length ; i++){
                 
             //Default style for grid areas
             var cellStyle = {
@@ -149,10 +149,10 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
             g.style = cellStyle;
 
             //Set grid positions to initialized positions
-            var top = $scope.$gg[i].y    
-            var left = $scope.$gg[i].x                  
-            cellStyle.left = $scope.$gg[i].x + 'px';
-            cellStyle.top = $scope.$gg[i].y + 'px';
+            var top = $scope.$gridPoints[i].y    
+            var left = $scope.$gridPoints[i].x                  
+            cellStyle.left = $scope.$gridPoints[i].x + 'px';
+            cellStyle.top = $scope.$gridPoints[i].y + 'px';
 
             //Initial grid size is square
             cellStyle.height = $scope.gridDivision + 'px';
@@ -169,7 +169,7 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
     window.addEventListener('resize', resizeGrid);
     
     //Function to reposition existing widgets after resize, called by resizeGrid below 
-    function repositionWidgets(wDivision,hDivision){
+    function repositionWidgets(xDivision,yDivision){
 
         //Loop through all existing widgets
         for(i=0 ; i<$scope.widgets.length ; i++){
@@ -184,8 +184,8 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
             buttonElement.style.top = gridElement.style.top;
 
             //Size is dependent on each individual widget's 'scale'
-            buttonElement.style.height = hDivision*$scope.widgets[i].scale.y + 'px';
-            buttonElement.style.width = wDivision*$scope.widgets[i].scale.x + 'px';
+            buttonElement.style.height = yDivision*$scope.widgets[i].scale.y + 'px';
+            buttonElement.style.width = xDivision*$scope.widgets[i].scale.x + 'px';
 
         }
 
@@ -197,12 +197,12 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         $scope.gridDivision = (window.innerWidth/30);
 
         //Update vertical and horizontal divisions
-        var wDivision = (window.innerWidth/$scope.$elements.x);
-        var hDivision = (window.innerHeight/$scope.$elements.y);
+        var xDivision = (window.innerWidth/$scope.$gridPointsMeta.xTotal);
+        var yDivision = (window.innerHeight/$scope.$gridPointsMeta.yTotal);
 
         $timeout(function(){
         //Call factory function to create new gridpoints
-        gPoints.func($scope.$elements.x,$scope.$elements.y,window,true,function(response){ 
+        gPoints.func($scope.$gridPointsMeta.xTotal,$scope.$gridPointsMeta.yTotal,window,true,function(response){ 
 
             //For all gridpoints returned
             for(i=0 ; i<response.length ; i++){
@@ -211,14 +211,14 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
                         //Set dimensions and position of grid element
                         gridElement.style.left = response[i].x + 'px';
                         gridElement.style.top = response[i].y + 'px';
-                        gridElement.style.height = hDivision + 'px';
-                        gridElement.style.width = wDivision + 'px';
+                        gridElement.style.height = yDivision + 'px';
+                        gridElement.style.width = xDivision + 'px';
    
             }
         });
 
         //Call reposition widgets function after grid is redrawn
-        repositionWidgets(wDivision,hDivision);
+        repositionWidgets(xDivision,yDivision);
 
         //Closing of timeout function = 5ms
         },5);

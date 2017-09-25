@@ -3,10 +3,8 @@ var app = angular.module('dashBoard',[]);
 app.controller('global', function($scope) {
             
             //Define some global variables on the scope (ew)
-            $scope.$gg=[];
-            $scope.$dimensions = {};
-            $scope.$elements = {};
-
+            $scope.$gridPoints=[];
+            $scope.$gridPointsMeta = {};
             $scope.boxes = [];
             
             // Initialize 5 boxes for me (WIP)

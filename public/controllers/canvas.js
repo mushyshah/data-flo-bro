@@ -19,7 +19,7 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
                 canvas.width = window.innerWidth;
                 canvas.height = window.innerHeight;
 
-                $scope.$scaleFactor = ((canvas.width/$scope.$dimensions.width)+(canvas.height/$scope.$dimensions.height))/2;
+                $scope.$scaleFactor = ((canvas.width/$scope.$gridPointsMeta.width)+(canvas.height/$scope.$gridPointsMeta.height))/2;
                 //console.log($scope.$scaleFactor);
 
                 //Crappy temp loop to create grid dots
@@ -49,7 +49,7 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
                 
                         $timeout(function(){
 
-                        gPoints.func($scope.$elements.x,$scope.$elements.y,window,false,function(response){ 
+                        gPoints.func($scope.$gridPointsMeta.xTotal,$scope.$gridPointsMeta.yTotal,window,false,function(response){ 
                             canvas.width = window.innerWidth;
                             canvas.height = window.innerHeight;
                             for(i=0 ; i<response.length ; i++){
@@ -72,15 +72,15 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
 
         $scope.init = function (){
 
-                $scope.$gg.length=0;
-                $scope.$dimensions.width = window.innerWidth;
-                $scope.$dimensions.height = window.innerHeight;
+                $scope.$gridPoints.length=0;
+                $scope.$gridPointsMeta.width = window.innerWidth;
+                $scope.$gridPointsMeta.height = window.innerHeight;
                 $scope.$gridDistance =  window.innerWidth/30;
                 $scope.$hDivision = window.innerWidth/30;
                 $scope.$wDivision = window.innerWidth/30;
 
-                var h=0;
-                var v=0;
+                var x=0;
+                var y=0;
 
                 for(i=$scope.anchorDivision/2; i< canvas.width ; i=i+$scope.anchorDivision){
                 v=0;
@@ -95,17 +95,17 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
                                 anchorPoint.y = Math.round(j);
 
                                 if((i+$scope.$gridDistance<window.innerWidth) && (j+$scope.$gridDistance<window.innerHeight))
-                                $scope.$gg.push(anchorPoint);
+                                $scope.$gridPoints.push(anchorPoint);
 
 
-                        v++;      
+                        y++;      
                         }
                         
-                h++;
+                x++;
                 }
 
-                $scope.$elements.x=h;
-                $scope.$elements.y=v;
+                $scope.$gridPointsMeta.xTotal=x;
+                $scope.$gridPointsMeta.yTotal=y;
                                 
                 $timeout(drawCanvas,50);
         }
