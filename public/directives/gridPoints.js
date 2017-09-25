@@ -7,7 +7,7 @@ app.factory('gPoints', function(){
             // Initialize points variable
             var points = [];
             points.length=0;
-            
+
             // Set x and y division values
             var xDivision = (w.innerWidth/xTotal);
             var yDivision = (w.innerHeight/yTotal);
@@ -16,7 +16,7 @@ app.factory('gPoints', function(){
                 for(i=0; i< xTotal ; i++){
                     for(j=0; j< yTotal ; j++){
                         var anchorPoint = {"x": 0,"y": 0};
-    
+
                         // Create point pixel values via loop and division values
                         anchorPoint.x = (xDivision/2) + Math.round(i*xDivision);
                         anchorPoint.y = (yDivision/2) + Math.round(j*yDivision);
@@ -29,8 +29,9 @@ app.factory('gPoints', function(){
     
                             // Unnecessary calculations here, don't wanna touch, no harm.
                             // Don't include points that are on right and bottom end of screen (don't wanna draw there)
-                            if(((i*xDivision)+(1.5*xDivision)<w.innerWidth) && ((j*yDivision)+(1.5*yDivision)<w.innerHeight))
+                            if(((i*xDivision)+(1.5*xDivision)<w.innerWidth) && ((j*yDivision)+(1.5*yDivision)<w.innerHeight)){
                                 points.push(anchorPoint);
+                            }
                             // Unless specifically want to include it for the grid dots
                             else if(!include)
                             points.push(anchorPoint);

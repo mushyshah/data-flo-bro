@@ -53,7 +53,6 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
                             canvas.width = window.innerWidth;
                             canvas.height = window.innerHeight;
                             for(i=0 ; i<response.length ; i++){
-                                    console.log('yo');
                                     var gridElement = document.getElementById('gridPoint-'+i);
                 
                                         context.fillStyle = "#8EA8C3";
@@ -83,7 +82,7 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
                 var y=0;
 
                 for(i=$scope.anchorDivision/2; i< canvas.width ; i=i+$scope.anchorDivision){
-                v=0;
+                y=0;
                         for(j=$scope.anchorDivision/2; j< canvas.height ; j=j+$scope.anchorDivision){
                                 
                                 var anchorPoint = {

@@ -207,7 +207,7 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
             //For all gridpoints returned
             for(i=0 ; i<response.length ; i++){
                     var gridElement = document.getElementById('gridPoint-'+i);
-
+                        
                         //Set dimensions and position of grid element
                         gridElement.style.left = response[i].x + 'px';
                         gridElement.style.top = response[i].y + 'px';
