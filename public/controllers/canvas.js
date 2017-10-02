@@ -10,7 +10,7 @@ app.controller('canvas', function($scope,$timeout,gPoints) {
         //Add listener for window resize
         window.addEventListener('resize', reDraw);
 
-        var slide = false;
+        $scope.slide = true;
         
         function drawCanvas() {
 

@@ -11,6 +11,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="/assets/canvas.css">
         <link rel="stylesheet" type="text/css" href="/assets/widgets.css">
+        <link rel="stylesheet" type="text/css" href="/assets/animations.css">
         <script src="/controllers/global.js"></script>
         <script src="/directives/sockets.js"></script>
         <script src="/controllers/widgets.js"></script>
@@ -30,24 +31,25 @@
         <!-- Draw fullscreen canvas with dots in grid locations -->
         <canvas id="canvas" ng-controller="canvas" ng-init="init()"></canvas>
 
-                <!-- Create an invisible div to use as 'drawingboard' for canvas -->
-                <div class="canvasdiv" id="canvasdiv" ng-controller="widgets">
+            <!-- Create an invisible div to use as 'drawingboard' for canvas -->
+            <div class="canvasdiv" id="canvasdiv" ng-controller="widgets">
                 
                 <!-- Create all the grid sections/areas with divs -->
-                <div ng-repeat="g in gridPoints track by $index" ng-init="initGrid()">
+                <div ng-repeat="g in gridPoints track by $index">
                         <div id="{{ 'gridPoint-' + $index }}" ng-attr-id="{{ 'gridPoint-' + $index }}" ng-style="{{g.style}}" droppable="true"></div>
                 </div> 
 
                 <!-- Create all the dynamic draggable widgets (initially none) -->
                 <div ng-repeat="w in widgets track by $index">
-                        <div id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
-                            <textarea rows="1" cols="5" class="textbox" ng-model="w.bindsTo"></textarea>
+                        <div class="{{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
+                            <!-- <textarea rows="1" cols="5" class="textbox" ng-model="w.bindsTo"></textarea> -->
+                        {{w.bindsTo}}
                         </div>
                 </div> 
 
                 <!-- Put in all the default items (buttons for now) in the left pane to be dragged -->
                 <div class="side-pane" ng-show="slide">
-                       <div class="button" draggable="true" ng-repeat="b in boxes" ></div> 
+                       <div class="button" draggable="true" ng-repeat="b in boxes">{{b}}</div> 
                 </div>
                 
                 <!-- Create a little clickable tab for the side pane to be pulled out -->

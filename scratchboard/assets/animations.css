@@ -15,11 +15,11 @@ html, body {
     display: block
   }
 
-@-webkit-keyframes blinker {  
+/* @-webkit-keyframes blinker {  
   0% { opacity: 1.0; }
   50% { opacity: 0.0; }
   100% { opacity: 1.0; }
-}
+} */
 
 @-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Webkit */
 

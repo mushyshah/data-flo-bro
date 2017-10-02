@@ -13,6 +13,9 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         "position" : "absolute",
         "border-style": "round",
         "border-radius": "10px",
+        "color": "black",
+        "text-align": "center",
+        "font-size": "10pt"
     };
 
     //Handler function for when element drag begins
@@ -56,6 +59,8 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         w.draggable = "true";
         w.style = $scope.bStyle;
         w.ping = 0;
+        w.animate='';
+        w.animation=event.srcElement.innerText;
 
         //Link the widget to the grid item it's being dropped on
         w.bindsTo = $scope.dropZone;
@@ -64,7 +69,9 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         w.scale = {x: wScale, y: hScale};
 
         //If this is a new widget (no id), create a new one
-        if (id == ""){
+        if (id == ''){
+
+            console.log(event);
             //Add widget based on style and dimensions found. Apply
             $scope.$apply(function(){
                 $scope.widgets.push(w);
@@ -73,7 +80,6 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         
         //Otherwise find out what widget this is and move it
         else{
-
             //Ensure that the existing widget's grid binding is updated
             $scope.$apply(function(){
             $scope.widgets[id.split("-")[1]].bindsTo=$scope.dropZone;
@@ -228,14 +234,6 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
     //Drawgrid 50ms after instantiation
     $timeout(drawGrid,50);
 
-    $scope.blinkC = function(i){
-
-                    //Get widget by id/index
-                    var buttonElement = document.getElementById('object-'+i);
-                    buttonElement.style.background = 'coral';
-
-    };
-
     socket.on('ping', function (data) {
 
         $timeout(function(){
@@ -248,8 +246,8 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
                     //If ping matches current widget, change it to coral
                     if($scope.widgets[i].bindsTo==data.widget){
                         found=true;
+                        $scope.widgets[i].animate=$scope.widgets[i].animation;
                         var buttonElement = document.getElementById('object-'+i);
-                        buttonElement.style.background = 'coral';
 
                         //Let the server know the ping was succesful - widget was found
                         socket.emit('pingResponse','Ping to widget '+ $scope.widgets[i].bindsTo + ' was successful!');
@@ -261,10 +259,12 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
             }
         },10);
 
+    });
+
+    $scope.$watch("value",function(newValue,oldValue){
+        // your code goes here...
         
 
     });
-
-
     
 })
