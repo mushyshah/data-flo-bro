@@ -41,7 +41,7 @@
 
                 <!-- Create all the dynamic draggable widgets (initially none) -->
                 <div ng-repeat="w in widgets track by $index">
-                        <div class="{{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
+                        <div class="widget {{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
                             <!-- <textarea rows="1" cols="5" class="textbox" ng-model="w.bindsTo"></textarea> -->
                         {{w.bindsTo}}
                         </div>

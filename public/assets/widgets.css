@@ -55,6 +55,18 @@
     text-align: center;
   }
 
+  .widget{
+    background: #FFFFFF;
+    border-style: round;
+    border-radius: 10px;
+    font-size: 10pt;
+    color: black;
+    text-align: center;
+  }
+  .widget:hover{
+    background: black;
+  }
+
   .textbox{
     width:50%;
     height:100%;
