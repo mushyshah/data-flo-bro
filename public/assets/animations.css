@@ -1,0 +1,33 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+@-webkit-keyframes blink {0%{opacity:1;} 50%{opacity:0;} 100%{opacity:1;}} /* Webkit */
+
+.opacity-blinker {
+  -moz-transition:all 0.5s ease-in-out;
+  -webkit-transition:all 0.5s ease-in-out;
+  -o-transition:all 0.5s ease-in-out;
+  -ms-transition:all 0.5s ease-in-out;
+  transition:all 0.5s ease-in-out; 
+  -moz-animation:blink normal 1.5s infinite ease-in-out; /*firefox*/
+  -webkit-animation:blink normal 1.5s infinite ease-in-out; /* Webkit */
+  -ms-animation:blink normal 1.5s infinite ease-in-out; /* IE */
+  animation:blink normal 1.5s infinite ease-in-out; /* Opera */
+}
+
+@-webkit-keyframes color-blink {0%{background:white;} 50%{background:coral;} 100%{background:white;}} /* Webkit */
+
+.color-blinker {
+  -moz-transition:all 0.5s ease-in-out;
+  -webkit-transition:all 0.5s ease-in-out;
+  -o-transition:all 0.5s ease-in-out;
+  -ms-transition:all 0.5s ease-in-out;
+  transition:all 0.5s ease-in-out; 
+  -moz-animation:color-blink normal 1.5s infinite ease-in-out; /*firefox*/
+  -webkit-animation:color-blink normal 1.5s infinite ease-in-out; /* Webkit */
+  -ms-animation:color-blink normal 1.5s infinite ease-in-out; /* IE */
+  animation:color-blink normal 1.5s infinite ease-in-out; /* Opera */
+}
+

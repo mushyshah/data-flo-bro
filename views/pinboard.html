@@ -44,7 +44,9 @@
                         <div class="widget {{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
                             <!-- <textarea rows="1" cols="5" class="textbox" ng-model="w.bindsTo"></textarea> -->
                         {{w.bindsTo}}
-                        </div>
+
+                        <div class="widget-resizer"></div>
+                        </div> 
                 </div> 
 
                 <!-- Put in all the default items (buttons for now) in the left pane to be dragged -->
