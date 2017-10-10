@@ -3,8 +3,10 @@
 <html lang="en">
 
     <!-- Lets get some angular in here -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular-animate.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular-animate.js"></script> -->
+    <script src="/assets/angular.min.js"></script>
+    <!-- <script src="/assets/angular-animate.js"></script> -->
     <script src="/socket.io/socket.io.js"></script>
 
     <!-- HTML HEAD -->
@@ -41,11 +43,11 @@
 
                 <!-- Create all the dynamic draggable widgets (initially none) -->
                 <div ng-repeat="w in widgets track by $index">
-                        <div class="widget {{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}">
+                        <div class="widget {{w.animate}}" id="{{ 'object-' + $index }}" ng-attr-id="{{ 'object-' + $index }}" ng-style="{{w.style}}" draggable="{{w.draggable}}" mouseenter="true">
                             <!-- <textarea rows="1" cols="5" class="textbox" ng-model="w.bindsTo"></textarea> -->
                         {{w.bindsTo}}
 
-                        <div class="widget-resizer"></div>
+                        <span class="widget-resizer" id="{{ 'resizer-' + $index }}" draggable="true" ng-show="{{w.showResizer}}"></span>
                         </div> 
                 </div> 
 

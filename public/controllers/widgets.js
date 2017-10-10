@@ -18,6 +18,25 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         "font-size": "10pt"
     };
 
+    //Handler function for when mouseover widget
+    $scope.hover = function(event){
+        // console.log('yo');
+        //Get the element's ID
+        var id = event.srcElement.id;
+        
+        if(event.type=="mouseenter")
+        var show=true;
+        else if(event.type=="mouseleave")
+        var show=false;
+        else
+        console.log(event);
+
+        $scope.$apply(function(){
+            $scope.widgets[id.split("-")[1]].showResizer=show;
+            });
+    
+    };
+
     //Handler function for when element drag begins
     $scope.dragStart = function(event){
         this.style.opacity = '0.4';
@@ -28,12 +47,71 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
 
     };
 
-    //Handler function for when element is 'dropped'
-    $scope.dragEnd = function(event){
+    //Handler function for drag
+    $scope.dragHandler = function(event){
+        // this.style.opacity = '1';
+        var elemType = event.srcElement.id.split("-")[0];
+
+        if(elemType == "resizer")
+            drag(event);
+
+    };
+
+    //Handler function for when dragging resizer
+    var drag = function(event){
+        
+                var element = document.getElementById(event.path[1].id);
+        
+                // $scope.$apply(function(){});
+                // console.log(element.style.width+' , '+event.clientX + ' , '+(element.style.left+event.clientX)+"px");
+                element.style.width=event.clientX-element.style.left.split("px")[0]+"px";
+                element.style.height=event.clientY-element.style.top.split("px")[0]+"px";
+        
+                //console.log(event.path[1].);
+                if(event.srcElement.id.split("-")[0]=="resizer")
+                    console.log('wassup');
+        
+                
+    };
+            
+    //Handler function for dragend
+    $scope.dragEndHandler = function(event){
+        this.style.opacity = '1';
+        var elemType = event.srcElement.id.split("-")[0];
+
+        if(elemType == "resizer")
+            widgetResize(event);
+        else
+            dragEnd(event);
+
+    };
+
+    //Function called to resize widget when resizer drag ended
+    var widgetResize = function(event){
+
+        
+        var widget = document.getElementById(event.path[1].id);        
+
+        var xDivision = (window.innerWidth/$scope.$gridPointsMeta.xTotal);
+        var yDivision = (window.innerHeight/$scope.$gridPointsMeta.yTotal);
+
+        var width = xDivision*(Math.round(widget.style.width.split("px")[0]/xDivision));
+        var height = yDivision*(Math.round(widget.style.height.split("px")[0]/yDivision));
+
+        $scope.widgets[event.path[1].id.split("-")[1]].scale.x = Math.round(widget.style.width.split("px")[0]/xDivision);
+        $scope.widgets[event.path[1].id.split("-")[1]].scale.y = Math.round(widget.style.height.split("px")[0]/yDivision);
+
+        widget.style.width=width+"px";
+        widget.style.height=height+"px";
+
+    };
+
+    //Function called to drop widget in position after drag ended
+    var dragEnd = function(event){
         
         //This is needed for some reason
         event.preventDefault();
-        this.style.opacity = '1';
+        //this.style.opacity = '1';
         
         var xDivision = (window.innerWidth/$scope.$gridPointsMeta.xTotal);
         var yDivision = (window.innerHeight/$scope.$gridPointsMeta.yTotal);
@@ -61,6 +139,7 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         w.ping = 0;
         w.animate='';
         w.animation=event.srcElement.innerText;
+        w.showResizer=true;
 
         //Link the widget to the grid item it's being dropped on
         w.bindsTo = $scope.dropZone;
@@ -71,7 +150,7 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         //If this is a new widget (no id), create a new one
         if (id == ''){
 
-            console.log(event);
+            // console.log(event);
             //Add widget based on style and dimensions found. Apply
             $scope.$apply(function(){
                 $scope.widgets.push(w);
@@ -93,15 +172,28 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
 
     };
 
+    //Handler function for dragover
+    $scope.dragOverHandler = function(event){
+        var elemType = event.srcElement.id.split("-")[0];
+
+        // console.log(event);
+        
+        if(elemType == "resizer")
+            console.log('ignore');
+        else
+            dragOver(event);
+
+    };
+
     //Element dragover function
-    $scope.dragOver = function (event) {
+    var dragOver = function (event) {
         event.preventDefault(); // Still don't know what this is for
         event.dataTransfer.dropEffect = 'move';
-
+        // console.log(event);
         //Make the grid area orange when highlighted
-        this.style.background = 'coral';
+        event.srcElement.style.background = 'coral';
         //Set scope dropzone (for dragend function) when highlighted
-        $scope.dropZone = this.id; 
+        $scope.dropZone = event.srcElement.id; 
         
         return false;
     };
@@ -126,7 +218,6 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
         
         return false;
     };
-
     
     drawGrid = function() { 
         
@@ -258,12 +349,6 @@ app.controller('widgets', function($scope, $timeout, gPoints, socket) {
                 socket.emit('pingResponse','Widget '+ data.widget + ' not found :('); 
             }
         },10);
-
-    });
-
-    $scope.$watch("value",function(newValue,oldValue){
-        // your code goes here...
-        
 
     });
     
